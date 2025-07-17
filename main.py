@@ -1,23 +1,22 @@
-# salve como app.py
 import numpy as np
 from scipy.integrate import trapezoid
 import streamlit as st
+import datetime
+import calendar
 
-st.title("Calculadora de Receita Projetada")
+# Data atual
+hoje = datetime.date.today()
+ano_atual = hoje.year
+mes_atual = hoje.month
+dias_do_mes = calendar.monthrange(ano_atual, mes_atual)[1]
+
+st.title("📊 Calculadora de Receita Projetada")
 
 valores = st.text_area("Digite as receitas diárias separadas por vírgula:")
 
 if valores:
     try:
         receita = [float(valor.strip()) for valor in valores.split(",")]
-        dias = np.arange(1, len(receita) + 1)
+        dias = np.arange(1,
 
-        receita_acumulada = trapezoid(receita, dias)
-        media_integral = receita_acumulada / (dias[-1] - dias[0])
-        receita_projetada_31 = media_integral * (31 - 1)
 
-        st.success(f"📊 Receita acumulada (até hoje): R$ {receita_acumulada:,.2f}")
-        st.info(f"📈 Média diária estimada: R$ {media_integral:,.2f}")
-        st.warning(f"📅 Receita total projetada até 31 dias: R$ {receita_projetada_31:,.2f}")
-    except:
-        st.error("Erro: Verifique se todos os valores são números válidos.")
